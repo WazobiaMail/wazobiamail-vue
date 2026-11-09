@@ -1,0 +1,63 @@
+{
+  "name": "wazobiamail-vue",
+  "version": "0.1.0",
+  "description": "Official WazobiaMail Vue 3 SDK - Reactive composables, plugins, and Enterprise Inbox helpers for Vue applications",
+  "author": "Bowofade Oyerinde <info@bonifadetechnologies.com> (https://github.com/WazobiaMail)",
+  "license": "MIT",
+  "homepage": "https://wazobiamail.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/WazobiaMail/wazobiamail-vue.git"
+  },
+  "bugs": {
+    "url": "https://github.com/WazobiaMail/wazobiamail-vue/issues"
+  },
+  "keywords": [
+    "vue",
+    "vue3",
+    "wazobiamail",
+    "email",
+    "inbox",
+    "mailboxes",
+    "composable",
+    "reactive"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": {
+        "import": "./dist/index.d.ts",
+        "require": "./dist/index.d.cts"
+      },
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "prepack": "bun run build"
+  },
+  "peerDependencies": {
+    "vue": "^3.3.0"
+  },
+  "dependencies": {
+    "wazobiamail": "file:../typescript"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "tsup": "^8.3.6",
+    "typescript": "^5.7.3",
+    "vue": "^3.5.13"
+  }
+}

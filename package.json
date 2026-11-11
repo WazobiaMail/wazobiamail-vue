@@ -52,7 +52,7 @@
     "vue": "^3.3.0"
   },
   "dependencies": {
-    "wazobiamail": "file:../typescript"
+    "wazobiamail": "^0.1.0"
   },
   "devDependencies": {
     "@types/node": "^22.13.4",

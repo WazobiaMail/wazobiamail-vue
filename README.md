@@ -125,10 +125,11 @@ const checkReceipt = async (trackingId: string) => {
 
 <template>
   <div v-if="trackingData" class="receipt-card">
-    <h3>Delivery Receipt: {{ trackingData.status }}</h3>
-    <p>Delivered: {{ trackingData.deliveredAt }}</p>
-    <p>Read Receipts (Opens): {{ trackingData.openCount }}</p>
-    <p>Click Receipts (Clicks): {{ trackingData.clickCount }}</p>
+    <h3>Delivery Receipt: {{ trackingData.message.status }}</h3>
+    <p>Last event: {{ trackingData.message.lastDeliveryEventAt }}</p>
+    <p>Read Receipts (Opens): {{ trackingData.message.openCount }}</p>
+    <p>Click Receipts (Clicks): {{ trackingData.message.clickCount }}</p>
+    <p>Events: {{ trackingData.events.length }}</p>
   </div>
 </template>
 ```

@@ -16,8 +16,8 @@ export function useDomains(options: UseDomainsOptions = {}): UseDomainsReturn {
 
     try {
       const response = await client.domains.list();
-      domains.value = response.data;
-      return response.data;
+      domains.value = response.data.items;
+      return response.data.items;
     } catch (err) {
       const caught = err instanceof Error ? err : new Error(String(err));
       error.value = caught;
@@ -33,8 +33,8 @@ export function useDomains(options: UseDomainsOptions = {}): UseDomainsReturn {
 
     try {
       const response = await client.domains.create({ domain: domainName });
-      domains.value.push(response.data);
-      return response.data;
+      domains.value.push(response.data.domain);
+      return response.data.domain;
     } catch (err) {
       const caught = err instanceof Error ? err : new Error(String(err));
       error.value = caught;
@@ -46,19 +46,21 @@ export function useDomains(options: UseDomainsOptions = {}): UseDomainsReturn {
 
   const getDnsRecords = async (domainId: string): Promise<DnsRecord[]> => {
     const response = await client.domains.getDnsRecords(domainId);
-    return response.data?.records ?? [];
+    return response.data?.domain?.records ?? [];
   };
 
   const verify = async (domainId: string): Promise<boolean> => {
     const response = await client.domains.verify(domainId);
-    const isVerified = response.data.verified ?? false;
+    const verification = response.data?.verification;
+    const isVerified = verification?.verificationStatus === 'verified';
     // Update local domain verification status if present
     const idx = domains.value.findIndex((d) => d.id === domainId);
     if (idx !== -1) {
       domains.value[idx] = {
         ...domains.value[idx],
+        verificationStatus: verification?.verificationStatus ?? domains.value[idx].verificationStatus,
         verified: isVerified,
-        status: response.data.domain?.status ?? domains.value[idx].status,
+        status: verification?.verificationStatus ?? domains.value[idx].status,
       };
     }
     return isVerified;

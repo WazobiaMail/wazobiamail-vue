@@ -37,14 +37,9 @@ describe('useMailbox Composable', () => {
       message: 'OK',
       data: {
         items: [...mockMessages],
-        pagination: {
-          page: 1,
-          pageSize: 20,
-          totalItems: 2,
-          totalPages: 1,
-          hasNext: false,
-          hasPrev: false,
-        },
+        total: 2,
+        page: 1,
+        limit: 20,
       },
     })) as any;
 
@@ -54,7 +49,7 @@ describe('useMailbox Composable', () => {
       data: { success: true },
     })) as any;
 
-    const { messages, isLoading, deleteMessage } = useMailbox('mb_test', {
+    const { messages, pagination, deleteMessage } = useMailbox('mb_test', {
       client: mockClient,
       immediate: true,
     });
@@ -64,6 +59,8 @@ describe('useMailbox Composable', () => {
 
     expect(messages.value.length).toBe(2);
     expect(messages.value[0].subject).toBe('First Email');
+    expect(pagination.value?.totalItems).toBe(2);
+    expect(pagination.value?.hasNext).toBe(false);
 
     // Delete message msg_1
     await deleteMessage('msg_1');
@@ -78,7 +75,7 @@ describe('useMailbox Composable', () => {
     mockClient.mailboxes.messages.list = mock(async () => ({
       success: true,
       message: 'OK',
-      data: { items: [], pagination: undefined },
+      data: { items: [], total: 0, page: 1, limit: 20 },
     })) as any;
 
     const { startPolling, stopPolling } = useMailbox('mb_test', {

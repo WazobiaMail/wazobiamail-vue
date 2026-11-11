@@ -8,6 +8,7 @@ describe('useDomains Composable', () => {
       id: 'dom_123',
       domain: 'mail.example.com',
       isDefault: true,
+      verificationStatus: 'pending',
       verified: false,
       status: 'pending',
       createdAt: '2026-11-09T00:00:00Z',
@@ -18,20 +19,23 @@ describe('useDomains Composable', () => {
     mockClient.domains.list = mock(async () => ({
       success: true,
       message: 'OK',
-      data: [{ ...mockDomain }],
+      data: { items: [{ ...mockDomain }] },
     })) as any;
 
     mockClient.domains.create = mock(async (req: any) => ({
       success: true,
       message: 'Domain created',
       data: {
-        id: 'dom_456',
-        domain: req.domain,
-        isDefault: false,
-        verified: false,
-        status: 'pending',
-        createdAt: '2026-11-09T00:00:00Z',
-        updatedAt: '2026-11-09T00:00:00Z',
+        domain: {
+          id: 'dom_456',
+          domain: req.domain,
+          isDefault: false,
+          verificationStatus: 'pending',
+          verified: false,
+          status: 'pending',
+          createdAt: '2026-11-09T00:00:00Z',
+          updatedAt: '2026-11-09T00:00:00Z',
+        },
       },
     })) as any;
 
@@ -39,12 +43,13 @@ describe('useDomains Composable', () => {
       success: true,
       message: 'Domain verified',
       data: {
-        verified: true,
-        records: [],
-        domain: {
-          ...mockDomain,
-          verified: true,
-          status: 'active',
+        verification: {
+          domainId: 'dom_123',
+          domain: 'mail.example.com',
+          verificationStatus: 'verified',
+          verifiedCount: 1,
+          pendingCount: 0,
+          checks: [],
         },
       },
     })) as any;
@@ -64,7 +69,7 @@ describe('useDomains Composable', () => {
     const isVerified = await verify('dom_123');
     expect(isVerified).toBe(true);
     expect(domains.value[0].verified).toBe(true);
-    expect(domains.value[0].status).toBe('active');
+    expect(domains.value[0].status).toBe('verified');
 
     // Create domain
     const created = await create('notifications.example.com');

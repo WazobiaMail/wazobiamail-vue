@@ -36,7 +36,24 @@ export function useMailbox(
       });
 
       messages.value = response.data?.items ?? [];
-      pagination.value = response.data?.pagination ?? null;
+
+      const data = response.data;
+      if (data) {
+        const page = data.page ?? currentPage.value;
+        const pageSize = data.limit ?? currentLimit.value;
+        const totalItems = data.total ?? messages.value.length;
+        const totalPages = pageSize > 0 ? Math.ceil(totalItems / pageSize) : 0;
+        pagination.value = {
+          page,
+          pageSize,
+          totalItems,
+          totalPages,
+          hasNext: page < totalPages,
+          hasPrev: page > 1,
+        };
+      } else {
+        pagination.value = null;
+      }
     } catch (err) {
       error.value = err instanceof Error ? err : new Error(String(err));
     } finally {

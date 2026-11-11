@@ -1,7 +1,7 @@
 {
   "name": "wazobiamail-vue",
   "version": "0.1.0",
-  "description": "Vue 3 composables for WazobiaMail transactional email via API. WazobiaMail is a Resend alternative that also supports SMTP, with domains, hosted inboxes, and deliverability checks.",
+  "description": "Vue 3 composables for WazobiaMail transactional email via API. Start free with 3,000 emails/month. A Resend alternative that also supports SMTP, with domains, hosted inboxes, and deliverability checks.",
   "author": "Bowofade Oyerinde <info@bonifadetechnologies.com> (https://github.com/WazobiaMail)",
   "license": "MIT",
   "homepage": "https://wazobiamail.com",

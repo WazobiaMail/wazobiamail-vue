@@ -1,7 +1,7 @@
 {
   "name": "wazobiamail-vue",
   "version": "0.1.0",
-  "description": "Official WazobiaMail Vue 3 SDK - Reactive composables, plugins, and Enterprise Inbox helpers for Vue applications",
+  "description": "Vue 3 composables for WazobiaMail transactional email via API. WazobiaMail is a Resend alternative that also supports SMTP, with domains, hosted inboxes, and deliverability checks.",
   "author": "Bowofade Oyerinde <info@bonifadetechnologies.com> (https://github.com/WazobiaMail)",
   "license": "MIT",
   "homepage": "https://wazobiamail.com",
@@ -20,7 +20,10 @@
     "inbox",
     "mailboxes",
     "composable",
-    "reactive"
+    "reactive",
+    "resend-alternative",
+    "email-api",
+    "smtp"
   ],
   "type": "module",
   "main": "./dist/index.cjs",
